@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-
+#import "ViewController.h"
+//#import "WelcomeViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -17,6 +18,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    //获取当前系统版本号
+    NSString * version = [[UIDevice currentDevice] systemVersion];
+    
+    NSArray *array = [version componentsSeparatedByString:@"."];
+    float systemVersion=[[NSString stringWithFormat:@"%@.%@",[array objectAtIndex:0],[array objectAtIndex:1]]doubleValue];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    ViewController *welcome = [[ViewController alloc] init];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:welcome] ; //初始化导航栏控制器
+    
+    if(systemVersion>=7)
+    {
+        
+        [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.365 green:0.365 blue:0.365 alpha:1]];
+        
+        UIColor * cc = [UIColor whiteColor];
+        NSDictionary * dict = [NSDictionary dictionaryWithObject:cc forKey:UITextAttributeTextColor];
+        
+        
+        navController.navigationBar.titleTextAttributes = dict;
+
+        [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1]];
+        
+        
+    }
+    else
+    {
+        [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.365 green:0.365 blue:0.365 alpha:1]];
+        //        [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1]];
+        
+        
+    }
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1], UITextAttributeTextColor,
+                                                          [UIColor colorWithRed:1.000 green:1.000 blue:1.000 alpha:1], UITextAttributeTextShadowColor,
+                                                          [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                                          [UIFont fontWithName:@"Arial" size:0.0], UITextAttributeFont,
+                                                          nil]];
+    
+    self.window.rootViewController = navController;
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
