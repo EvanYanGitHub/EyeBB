@@ -232,6 +232,7 @@
     [self.view addSubview:_PopupSView];
     [_PopupSView setHidden:YES];
     
+    
 }
 
 
